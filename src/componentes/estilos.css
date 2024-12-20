@@ -1,0 +1,85 @@
+/*navbar*/
+.Link {
+    display: inline-block;
+    padding: 15px 60px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color:black;
+    border-radius: 4px;
+    margin: 5px
+}
+
+.Link:hover {
+    background-color: #fdc00d;
+    color: black; 
+}
+
+
+/*dialog*/
+.dialog .p-dialog-header {
+  font-size: 40px;  
+  font-weight: bold;  
+  color: whitesmoke;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  margin-top: 20px; 
+  margin-bottom: 20px;
+  padding-left: 20px;  
+  padding-right: 20px; 
+}
+
+/*x*/
+.p-dialog-header .p-dialog-header-close {
+  color: white;  
+}
+
+.p-dialog-header .p-dialog-header-close:hover {
+  background-color: transparent ;  
+  color: white; 
+}
+
+
+
+.bg-dark-input {
+  background-color: #343a40 !important; 
+  color: white !important; 
+}
+
+
+.btn-actualizar {
+  background-color: white; 
+  color: black; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  margin: 8px;
+}
+
+.btn-eliminar {
+  background-color: rgba(255, 203, 14, 0.967); 
+  color: black; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 20px;
+  margin: 8px; 
+}
+
+
+.p-dialog {
+  padding: 20px; 
+  margin: 30px;  
+}
+
+.p-dialog-content {
+  padding: 20px; 
+}
+
+
+/*footer*/
+
+.footer{
+  margin-top: 20px;
+  color: black;
+}

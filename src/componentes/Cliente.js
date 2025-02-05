@@ -8,11 +8,11 @@ function Cliente() {
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
   const [cuit, setCuit] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [clienteList, setClienteList] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null);
+  // const [editMode, setEditMode] = useState(false);
+  // const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
     const fetchClientes = async () => {
@@ -26,32 +26,32 @@ function Cliente() {
     fetchClientes();
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const clientData = {
-      id: id,
-      nombre: nombre,
-      cuit: cuit,
-    };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const clientData = {
+  //     id: id,
+  //     nombre: nombre,
+  //     cuit: cuit,
+  //   };
 
-    if (editMode) {
-      const updatedList = clienteList.map((item, index) =>
-        index === editingIndex ? clientData : item
-      );
-      setClienteList(updatedList);
-      setEditMode(false);
-      setEditingIndex(null);
-    } else {
-      try {
-        const response = await axios.post("http://localhost:3001/api/cliente/guardar", { nombre, cuit });
-        alert("Cliente guardado con éxito");
-        actualizarLista();
-        limpiarCampos();
-      } catch (error) {
-        console.error("Error al guardar el cliente:", error);
-      }
-    }
-  };
+  //   if (editMode) {
+  //     const updatedList = clienteList.map((item, index) =>
+  //       index === editingIndex ? clientData : item
+  //     );
+  //     setClienteList(updatedList);
+  //     setEditMode(false);
+  //     setEditingIndex(null);
+  //   } else {
+  //     try {
+  //       const response = await axios.post("http://localhost:3001/api/cliente/guardar", { nombre, cuit });
+  //       alert("Cliente guardado con éxito");
+  //       actualizarLista();
+  //       limpiarCampos();
+  //     } catch (error) {
+  //       console.error("Error al guardar el cliente:", error);
+  //     }
+  //   }
+  // };
 
   const handleAddCliente = async (e) => {
     e.preventDefault();
@@ -107,7 +107,7 @@ function Cliente() {
     setNombre(cliente.nombre);
     setCuit(cliente.cuit);
     setVisible(true);
-    setEditMode(true);
+    // setEditMode(true);
   };
 
   const limpiarCampos = () => {

@@ -60,8 +60,9 @@ const AppContent = () => {
 
 const ProtectedRoute = ({ redirectPath = "/", children }) => {  
   const navigate = useNavigate();  
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {  
+    // Código dentro del useEffect
     const token = localStorage.getItem("firebaseToken");  
 
     if (!token) {  

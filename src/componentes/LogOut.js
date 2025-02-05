@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 export const LogOut = () => {
   const navigate = useNavigate();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    // Código dentro del useEffect
     const token = localStorage.getItem("firebaseToken");
 
     if (token) {

@@ -7,8 +7,9 @@ import  '../componentes/estilos.css';
 export const Auth = () => {
   const navigate = useNavigate();
   
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    // Código dentro del useEffect
     const token = localStorage.getItem("firebaseToken");
 
     if (token) {

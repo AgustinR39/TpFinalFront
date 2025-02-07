@@ -3,7 +3,7 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
-import { API_BASE_URL } from "../config/config";
+// import { API_BASE_URL } from "../config/config";
 
 // const API_BASE_URL = "http://localhost:3001/api";
 
@@ -15,7 +15,7 @@ function CatalogoProducto() {
   const fetchProductos = async () => {
 
     try {
-      const response = await axios.get(`${API_BASE_URL}/producto/el-producto`);
+      const response = await axios.get(`https://tpfinalback-production.up.railway.app/producto/el-producto`);
       console.log(response.data);
       setCatalogoList(response.data);
     } catch (error) {
@@ -52,7 +52,7 @@ function CatalogoProducto() {
               }
               header={
                 <img
-                  src={`http://localhost:3001/uploads/${item.fotoProducto}`}
+                  src={`https://tpfinalback-production.up.railway.app/uploads/${item.fotoProducto}`}
                   alt={item.nombre}
                   style={{
                     width: "100%",

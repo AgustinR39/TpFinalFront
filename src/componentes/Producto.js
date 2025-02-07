@@ -3,7 +3,7 @@ import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import '../componentes/estilos.css';
-import { API_BASE_URL } from "../config/config";
+// import { API_BASE_URL } from "../config/config";
 
 function Producto() {
   const [id, setId] = useState("");
@@ -21,7 +21,7 @@ function Producto() {
   useEffect(() => {
     const fetchProveedores = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/proveedor/`);
+        const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/proveedor/`);
         setProveedores(response.data || []); 
       } catch (error) {
         console.error("Error al cargar proveedores:", error);
@@ -30,7 +30,7 @@ function Producto() {
 
     const fetchProductos = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
+        const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/producto/el-producto`);
         setProductoInfoList(response.data || []);
       } catch (error) {
         console.error("Error al cargar productos", error);
@@ -43,7 +43,7 @@ function Producto() {
 
   const fetchProductos = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
+      const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/producto/el-producto`);
       setProductoInfoList(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error al cargar productos", error);
@@ -85,12 +85,12 @@ function Producto() {
 
     try {
       if (id) {
-        await axios.put(`${API_BASE_URL}/api/producto/modificar-producto/${id}`, formData, {
+        await axios.put(`https://tpfinalback-production.up.railway.app/api/producto/modificar-producto/${id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         alert("Producto actualizado con éxito");
       } else {
-        await axios.post(`${API_BASE_URL}/api/producto/guardar`, formData, {
+        await axios.post(`https://tpfinalback-production.up.railway.app/api/producto/guardar`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         alert("Producto guardado con éxito");
@@ -117,7 +117,7 @@ function Producto() {
 
   const handleEliminarProducto = async () => {
     try {
-      await axios.delete(`${API_BASE_URL}/api/producto/eliminar/${id}`);
+      await axios.delete(`https://tpfinalback-production.up.railway.app/api/producto/eliminar/${id}`);
       alert("Producto eliminado con éxito");
       setProductoInfoList(productoInfoList.filter((producto) => producto.id !== id));
       setVisible(false);

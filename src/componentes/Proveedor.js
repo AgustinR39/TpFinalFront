@@ -3,6 +3,7 @@ import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import '../componentes/estilos.css';
+import { API_BASE_URL } from "../config/config";
 
 function Proveedor() {
   const [id, setId] = useState("");
@@ -15,7 +16,7 @@ function Proveedor() {
   useEffect(() => {
     const fetchProveedorList = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/proveedor/");
+        const response = await axios.get(`${API_BASE_URL}/api/proveedor/`);
         setProveedorList(response.data);
       } catch (error) {
         console.error("Error al cargar los proveedores:", error);
@@ -27,7 +28,7 @@ function Proveedor() {
   const handleAddProveedor = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3001/api/proveedor/guardar", { nombre, cuit });
+      await axios.post(`${API_BASE_URL}/api/proveedor/guardar`, { nombre, cuit });
       alert("Proveedor guardado con éxito");
       actualizarLista();
       limpiarCampos();
@@ -38,7 +39,7 @@ function Proveedor() {
 
   const handleEditProveedor = async () => {
     try {
-      await axios.put(`http://localhost:3001/api/proveedor/modificar-proveedor/${id}`, {
+      await axios.put(`${API_BASE_URL}/api/proveedor/modificar-proveedor/${id}`, {
         id,
         nombre,
         cuit,
@@ -54,7 +55,7 @@ function Proveedor() {
 
   const handleEliminarProveedor = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/proveedor/eliminar/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/proveedor/eliminar/${id}`);
       alert("Proveedor eliminado con éxito");
       setProveedorList(proveedorList.filter((proveedor) => proveedor.id !== id));
       setVisible(false);
@@ -66,7 +67,7 @@ function Proveedor() {
 
   const actualizarLista = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/proveedor/");
+      const response = await axios.get(`${API_BASE_URL}/api/proveedor/`);
       setProveedorList(response.data);
     } catch (error) {
       console.error("Error al actualizar la lista de proveedores:", error);

@@ -3,8 +3,9 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 
-const API_BASE_URL = "http://localhost:3001/api";
+// const API_BASE_URL = "http://localhost:3001/api";
 
 function CatalogoProducto() {
   

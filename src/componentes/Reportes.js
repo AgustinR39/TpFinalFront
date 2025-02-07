@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 import { Chart, registerables } from "chart.js";
+import { API_BASE_URL } from "../config/config";
 
 
 Chart.register(...registerables);
@@ -15,7 +16,7 @@ const Reportes = () => {
   
   const obtenerProductos = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/producto/el-producto");
+      const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
       const productos = response.data;
 
       const labels = productos.map((producto) => producto.nombre);
@@ -48,7 +49,7 @@ const Reportes = () => {
 
   const obtenerProveedoresMasUtilizados = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/producto/el-producto");
+      const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
       const productos = response.data;
   
       

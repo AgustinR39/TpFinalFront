@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "primereact/button";
 import { Dialog } from 'primereact/dialog'; 
 import '../componentes/estilos.css';
+import { API_BASE_URL } from "../config/config";
 
 function Pedido() {
   const [id, setId] = useState(""); 
@@ -19,13 +20,13 @@ function Pedido() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productos = await axios.get("http://localhost:3001/api/producto/el-producto");
+        const productos = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
         setProductosList(productos.data || []);  
 
-        const clientes = await axios.get("http://localhost:3001/api/cliente/usuarios");
+        const clientes = await axios.get(`${API_BASE_URL}/api/cliente/usuarios`);
         setClientesList(clientes.data || []);  
 
-        const pedidos = await axios.get("http://localhost:3001/api/pedido");
+        const pedidos = await axios.get(`${API_BASE_URL}/api/pedido`);
         setPedidosList(pedidos.data || []);  
       } catch (error) {
         console.error("Error al cargar los datos:", error);
@@ -77,10 +78,10 @@ function Pedido() {
 
     try {
       if (id) {
-        await axios.put(`http://localhost:3001/api/pedido/${id}`, pedidoData);
+        await axios.put(`${API_BASE_URL}/api/pedido/${id}`, pedidoData);
         alert("Pedido actualizado con éxito");
       } else {
-        await axios.post("http://localhost:3001/api/pedido/guardar", pedidoData);
+        await axios.post(`${API_BASE_URL}/api/pedido/guardar`, pedidoData);
         alert("Pedido guardado con éxito");
       }
       fetchPedidosList();
@@ -108,7 +109,7 @@ function Pedido() {
 
   const handleDelete = async (pedidoId) => {
     try {
-      await axios.delete(`http://localhost:3001/api/pedido/${pedidoId}`);
+      await axios.delete(`${API_BASE_URL}/api/pedido/${pedidoId}`);
       alert("Pedido eliminado con éxito");
       fetchPedidosList();
     } catch (error) {
@@ -118,7 +119,7 @@ function Pedido() {
 
   const fetchPedidosList = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/pedido");
+      const response = await axios.get(`${API_BASE_URL}/api/pedido`);
       setPedidosList(response.data || []);
     } catch (error) {
       console.error("Error al cargar pedidos:", error);

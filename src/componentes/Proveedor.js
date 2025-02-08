@@ -3,74 +3,64 @@ import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import '../componentes/estilos.css';
-// import { API_BASE_URL } from "../config/config";
+import { API_BASE_URL } from "../config";
 
 function Proveedor() {
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
   const [cuit, setCuit] = useState("");
-
   const [proveedorList, setProveedorList] = useState([]);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const fetchProveedorList = async () => {
-      try {
-        const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/proveedor/`);
-        setProveedorList(response.data);
-      } catch (error) {
-        console.error("Error al cargar los proveedores:", error);
-      }
-    };
     fetchProveedorList();
   }, []);
+
+  const fetchProveedorList = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/proveedor/`);
+      setProveedorList(response.data || []);
+    } catch (error) {
+      console.error("❌ Error al cargar los proveedores:", error);
+    }
+  };
 
   const handleAddProveedor = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`https://tpfinalback-production.up.railway.app/api/proveedor/guardar`, { nombre, cuit });
-      alert("Proveedor guardado con éxito");
-      actualizarLista();
+      await axios.post(`${API_BASE_URL}/api/proveedor/guardar`, { nombre, cuit });
+      alert("✅ Proveedor guardado con éxito");
+      fetchProveedorList();
       limpiarCampos();
     } catch (error) {
-      console.error("Error al guardar el proveedor:", error);
+      console.error("❌ Error al guardar el proveedor:", error);
+      alert("Error al guardar el proveedor");
     }
   };
 
   const handleEditProveedor = async () => {
     try {
-      await axios.put(`https://tpfinalback-production.up.railway.app/api/proveedor/modificar-proveedor/${id}`, {
-        id,
-        nombre,
-        cuit,
-      });
-      alert("Proveedor actualizado con éxito");
-      actualizarLista();
+      await axios.put(`${API_BASE_URL}/api/proveedor/modificar-proveedor/${id}`, { nombre, cuit });
+      alert("✅ Proveedor actualizado con éxito");
+      fetchProveedorList();
       setVisible(false);
       limpiarCampos();
     } catch (error) {
-      console.error("Error al actualizar el proveedor:", error);
+      console.error("❌ Error al actualizar el proveedor:", error);
+      alert("Error al actualizar el proveedor");
     }
   };
 
   const handleEliminarProveedor = async () => {
     try {
-      await axios.delete(`https://tpfinalback-production.up.railway.app/api/proveedor/eliminar/${id}`);
-      alert("Proveedor eliminado con éxito");
-      setProveedorList(proveedorList.filter((proveedor) => proveedor.id !== id));
+      await axios.delete(`${API_BASE_URL}/api/proveedor/eliminar/${id}`);
+      alert("✅ Proveedor eliminado con éxito");
+      fetchProveedorList();
       setVisible(false);
       limpiarCampos();
     } catch (error) {
-      console.error("Error al eliminar el proveedor:", error);
-    }
-  };
-
-  const actualizarLista = async () => {
-    try {
-      const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/proveedor/`);
-      setProveedorList(response.data);
-    } catch (error) {
-      console.error("Error al actualizar la lista de proveedores:", error);
+      console.error("❌ Error al eliminar el proveedor:", error);
+      alert("Error al eliminar el proveedor");
     }
   };
 

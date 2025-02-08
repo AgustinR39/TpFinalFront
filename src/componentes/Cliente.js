@@ -3,103 +3,65 @@ import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import '../componentes/estilos.css';
-// import { API_BASE_URL } from "../config/config";
+import { API_BASE_URL } from "../config";
 
 function Cliente() {
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
   const [cuit, setCuit] = useState("");
-  // const [loading, setLoading] = useState(false);
   const [clienteList, setClienteList] = useState([]);
   const [visible, setVisible] = useState(false);
-  // const [editMode, setEditMode] = useState(false);
-  // const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
-    const fetchClientes = async () => {
-      try {
-        const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/cliente/usuarios`);
-        setClienteList(response.data);
-      } catch (error) {
-        console.error("Error al obtener los clientes:", error);
-      }
-    };
-    fetchClientes();
+    actualizarLista();
   }, []);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const clientData = {
-  //     id: id,
-  //     nombre: nombre,
-  //     cuit: cuit,
-  //   };
-
-  //   if (editMode) {
-  //     const updatedList = clienteList.map((item, index) =>
-  //       index === editingIndex ? clientData : item
-  //     );
-  //     setClienteList(updatedList);
-  //     setEditMode(false);
-  //     setEditingIndex(null);
-  //   } else {
-  //     try {
-  //       const response = await axios.post("http://localhost:3001/api/cliente/guardar", { nombre, cuit });
-  //       alert("Cliente guardado con éxito");
-  //       actualizarLista();
-  //       limpiarCampos();
-  //     } catch (error) {
-  //       console.error("Error al guardar el cliente:", error);
-  //     }
-  //   }
-  // };
+  const actualizarLista = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/cliente/usuarios`);
+      setClienteList(response.data);
+    } catch (error) {
+      console.error("❌ Error al obtener los clientes:", error);
+      alert("Error al cargar la lista de clientes");
+    }
+  };
 
   const handleAddCliente = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`https://tpfinalback-production.up.railway.app/api/cliente/guardar`, { nombre, cuit });
-      alert("Cliente guardado con éxito");
+      await axios.post(`${API_BASE_URL}/api/cliente/guardar`, { nombre, cuit });
+      alert("✅ Cliente guardado con éxito");
       actualizarLista();
       limpiarCampos();
     } catch (error) {
-      console.error("Error al guardar el cliente:", error);
+      console.error("❌ Error al guardar el cliente:", error);
+      alert("Error al guardar el cliente");
     }
   };
 
   const handleEditCliente = async () => {
     try {
-      await axios.put(`https://tpfinalback-production.up.railway.app/api/cliente/modificar-cliente/${id}`, {
-        id,
-        nombre,
-        cuit,
-      });
-      alert("Cliente actualizado con éxito");
+      await axios.put(`${API_BASE_URL}/api/cliente/modificar-cliente/${id}`, { nombre, cuit });
+      alert("✅ Cliente actualizado con éxito");
       actualizarLista();
       setVisible(false);
       limpiarCampos();
     } catch (error) {
-      console.error("Error al actualizar el cliente:", error);
+      console.error("❌ Error al actualizar el cliente:", error);
+      alert("Error al actualizar el cliente");
     }
   };
 
   const handleEliminarCliente = async () => {
     try {
-      await axios.delete(`https://tpfinalback-production.up.railway.app/api/cliente/eliminar/${id}`);
-      alert("Cliente eliminado con éxito");
+      await axios.delete(`${API_BASE_URL}/api/cliente/eliminar/${id}`);
+      alert("✅ Cliente eliminado con éxito");
       setClienteList(clienteList.filter((cliente) => cliente.id !== id));
       setVisible(false);
       limpiarCampos();
     } catch (error) {
-      console.error("Error al eliminar el cliente:", error);
-    }
-  };
-
-  const actualizarLista = async () => {
-    try {
-      const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/cliente/usuarios`);
-      setClienteList(response.data);
-    } catch (error) {
-      console.error("Error al actualizar la lista de clientes:", error);
+      console.error("❌ Error al eliminar el cliente:", error);
+      alert("Error al eliminar el cliente");
     }
   };
 
@@ -108,7 +70,6 @@ function Cliente() {
     setNombre(cliente.nombre);
     setCuit(cliente.cuit);
     setVisible(true);
-    // setEditMode(true);
   };
 
   const limpiarCampos = () => {

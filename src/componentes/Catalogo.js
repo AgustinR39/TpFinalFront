@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { API_BASE_URL } from "../config/config";
-
-// const API_BASE_URL = "http://localhost:3001/api";
+import { API_BASE_URL } from "../config";
 
 function CatalogoProducto() {
-  
   const [catalogoList, setCatalogoList] = useState([]);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const fetchProductos = async () => {
-
     try {
-      const response = await axios.get(`https://tpfinalback-production.up.railway.app/producto/el-producto`);
-      console.log(response.data);
-      setCatalogoList(response.data);
+      const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
+      setCatalogoList(response.data || []);
     } catch (error) {
-      console.error("Error fetching productos:", error);
+      console.error("❌ Error al obtener los productos:", error);
     }
   };
 
@@ -27,9 +22,8 @@ function CatalogoProducto() {
     fetchProductos();
   }, []);
 
-  
   const irAPedido = () => {
-    navigate("/pedido"); 
+    navigate("/pedido");
   };
 
   return (

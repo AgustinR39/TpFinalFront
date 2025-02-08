@@ -2,28 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 import { Chart, registerables } from "chart.js";
-// import { API_BASE_URL } from "../config/config";
-
+import { API_BASE_URL } from "../config";
 
 Chart.register(...registerables);
 
 const Reportes = () => {
   const [chartData, setChartData] = useState({
     precios: { labels: [], datasets: [] },
-    proveedores: { labels: [], datasets: [] }, 
+    proveedores: { labels: [], datasets: [] },
   });
 
-  
   const obtenerProductos = async () => {
     try {
-      const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/producto/el-producto`);
+      const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
       const productos = response.data;
 
       const labels = productos.map((producto) => producto.nombre);
       const preciosCompra = productos.map((producto) => producto.precioCompra);
       const preciosVenta = productos.map((producto) => producto.precioVenta);
 
-      
       setChartData((prevData) => ({
         ...prevData,
         precios: {
@@ -32,7 +29,7 @@ const Reportes = () => {
             {
               label: "Precio de Compra",
               data: preciosCompra,
-              backgroundColor: "rgba(255, 255, 255, 0.6)", 
+              backgroundColor: "rgba(255, 255, 255, 0.6)",
             },
             {
               label: "Precio de Venta",
@@ -43,26 +40,23 @@ const Reportes = () => {
         },
       }));
     } catch (error) {
-      console.error("Error al obtener los productos:", error);
+      console.error("❌ Error al obtener los productos:", error);
     }
   };
 
   const obtenerProveedoresMasUtilizados = async () => {
     try {
-      const response = await axios.get(`https://tpfinalback-production.up.railway.app/api/producto/el-producto`);
+      const response = await axios.get(`${API_BASE_URL}/api/producto/el-producto`);
       const productos = response.data;
-  
-      
+
       const proveedoresCount = productos.reduce((acc, producto) => {
         acc[producto.proveedor] = (acc[producto.proveedor] || 0) + 1;
         return acc;
       }, {});
-  
-      
+
       const labels = Object.keys(proveedoresCount);
       const cantidades = Object.values(proveedoresCount);
-  
-      
+
       setChartData((prevData) => ({
         ...prevData,
         proveedores: {
@@ -71,21 +65,21 @@ const Reportes = () => {
             {
               label: "Cantidad de Productos por Proveedor",
               data: cantidades,
-              backgroundColor: "rgba(252, 192, 16, 0.6)", 
+              backgroundColor: "rgba(252, 192, 16, 0.6)",
             },
           ],
         },
       }));
     } catch (error) {
-      console.error("Error al obtener los proveedores más utilizados:", error);
+      console.error("❌ Error al obtener los proveedores más utilizados:", error);
     }
   };
 
   useEffect(() => {
-   
     obtenerProductos();
-    obtenerProveedoresMasUtilizados(); 
-  }, []); 
+    obtenerProveedoresMasUtilizados();
+  }, []);
+
   return (
     <div>
       
